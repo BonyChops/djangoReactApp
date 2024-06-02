@@ -1,10 +1,23 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+import 'vite/modulepreload-polyfill';
+import {createRoot} from 'react-dom/client';
+import {createInertiaApp} from '@inertiajs/react';
 import './index.css'
+import {StrictMode} from "react";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+
+document.addEventListener('DOMContentLoaded', () => {
+    createInertiaApp({
+        resolve: (name) => {
+            const pages = import.meta.glob('./pages/**/*.tsx', {eager: true});
+            return pages[`./pages/${name}.tsx`];
+        },
+        setup({el, App, props}) {
+            createRoot(el).render(
+                <StrictMode>
+                    <App {...props} />
+                </StrictMode>
+            );
+        }
+    }).then(() => {
+    });
+});
