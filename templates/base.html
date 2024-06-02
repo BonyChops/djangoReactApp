@@ -1,0 +1,17 @@
+{% load django_vite %}
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!-- vite hmr -->
+        {% vite_hmr_client %}
+        {% vite_react_refresh %}
+        {% vite_asset 'src/main.tsx' %}
+        <title>djangoReactApp</title>
+    </head>
+    <body>      
+        <!-- inertia -->
+        {% block inertia %}{% endblock %}
+    </body>
+</html>

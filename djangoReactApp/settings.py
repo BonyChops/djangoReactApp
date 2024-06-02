@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django_vite",
+    "inertia",
 ]
 
 MIDDLEWARE = [
@@ -47,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "inertia.middleware.InertiaMiddleware",
 ]
 
 ROOT_URLCONF = 'djangoReactApp.urls'
@@ -112,13 +115,33 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
+# 静的ファイル（CSS、JavaScript、画像）
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
 
-# Default primary key field type
+# デフォルトの主キーのフィールドタイプ
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INERTIA_LAYOUT = 'base.html'
+
+# Djangoフォームの投稿に必要
+CSRF_HEADER_NAME = 'HTTP_X_XSRF_TOKEN'
+CSRF_COOKIE_NAME = 'XSRF-TOKEN'
+
+# ViteJSアセットがビルドされる場所
+DJANGO_VITE_ASSETS_PATH = BASE_DIR / 'frontend' / 'dist'
+
+# HMRを使用するかどうか
+DJANGO_VITE_DEV_MODE = DEBUG
+
+# Vite サーバーポート設定
+DJANGO_VITE_DEV_SERVER_PORT = 3000
+
+# 静的ファイルのフォルダの名前（python manage.py collectstaticを実行した後）
+STATIC_ROOT = BASE_DIR / 'static'
+
+# DJANGO_VITE_ASSETS_PATHをSTATICFILES_DIRSに含め、python manage.py collectstaticコマンドを実行した際に内部にコピーされるようにする
+STATICFILES_DIRS = [DJANGO_VITE_ASSETS_PATH]
